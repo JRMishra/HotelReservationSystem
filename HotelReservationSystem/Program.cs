@@ -8,6 +8,7 @@ namespace HotelReservationSystem
         {
             Console.WriteLine("Welcome to Hotel Reservation System");
             Console.WriteLine("====================================");
+            StartHotelReservationSystem.Start();
         }
     }
 }
