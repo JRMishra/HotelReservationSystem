@@ -10,7 +10,9 @@ namespace HotelReservationSystem
         {
             HOTEL_ALREADY_EXISTS,
             NULL_HOTEL_NAME,
-            ZERO_HOTEL_RATE
+            ZERO_HOTEL_RATE,
+            WRONG_DATE_FORMAT,
+            WRONG_DATE_VALUE
         }
 
         ExceptionType type;
