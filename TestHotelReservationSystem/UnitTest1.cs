@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using HotelReservationSystem;
 
 namespace TestHotelReservationSystem
 {
@@ -8,6 +9,7 @@ namespace TestHotelReservationSystem
         [TestMethod]
         public void TestMethod1()
         {
+            
         }
     }
 }
