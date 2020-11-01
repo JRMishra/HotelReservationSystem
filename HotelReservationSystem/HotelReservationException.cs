@@ -12,7 +12,10 @@ namespace HotelReservationSystem
             NULL_HOTEL_NAME,
             ZERO_HOTEL_RATE,
             WRONG_DATE_FORMAT,
-            WRONG_DATE_VALUE
+            WRONG_DATE_VALUE,
+            WRONG_MONTH_VALUE,
+            WRONG_YEAR_VALUE,
+            ENDDATE_BEFORE_STARTDATE
         }
 
         ExceptionType type;

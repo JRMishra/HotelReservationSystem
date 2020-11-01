@@ -31,30 +31,16 @@ namespace HotelReservationSystem
         /// <summary>
         /// Method to return details of cheapest hotel for given range of dates
         /// </summary>
-        public string FindHotel(string startDate, string endDate)
+        public string FindHotel(string start, string end)
         {
-            int duration = FindDuration(startDate, endDate);
+            DateTime startDate = DateParser.ConvertToDate(start);
+            DateTime endDate = DateParser.ConvertToDate(end);
+            int duration = DateParser.FindDuration(startDate, endDate);
+            if (duration == -1)
+                throw new HotelReservationException(HotelReservationException.ExceptionType.ENDDATE_BEFORE_STARTDATE, "End date can not be before start date");
             Hotel hotel = FindHotel(duration);
             return hotel.Name + ","+" Total Rates: $"+hotel.Rates*duration;
         }
 
-        /// <summary>
-        /// Given start and end date, should return duration
-        /// </summary>
-        private int FindDuration(string start, string end)
-        {
-            int startDay,endDay;
-            bool isStartDateNumeric = Int32.TryParse(start.Substring(0,2),out startDay);
-            bool isEndDateNumeric  = Int32.TryParse(end.Substring(0, 2), out endDay);
-
-            if(!isStartDateNumeric || !isEndDateNumeric)
-                throw new HotelReservationException(HotelReservationException.ExceptionType.WRONG_DATE_FORMAT, "Wrong date format");
-            
-            if (startDay <= 0 || startDay > 31 || endDay <= 0 || endDay > 31)
-                throw new HotelReservationException(HotelReservationException.ExceptionType.WRONG_DATE_VALUE, "Incorrect date value");
-            
-            int duration = endDay - startDay + 1;
-            return duration;
-        }
     }
 }

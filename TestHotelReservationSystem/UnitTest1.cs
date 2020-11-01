@@ -223,7 +223,7 @@ namespace TestHotelReservationSystem
         }
 
         /// <summary>
-        /// If format of any date is wrong,
+        /// If value of any date is wrong,
         /// it should throw custom exception with appropriate message
         /// </summary>
         [TestMethod]
@@ -243,6 +243,76 @@ namespace TestHotelReservationSystem
             }
             //Assert
             Assert.AreEqual(exception.Message, "Incorrect date value");
+        }
+
+        /// <summary>
+        /// If value of month is wrong,
+        /// it should throw custom exception with appropriate message
+        /// </summary>
+        [TestMethod]
+        public void GivenWrongMonthValue_ShouldThrowCustomException()
+        {
+            //Arrange
+            ReservationSystemBuilder reservationSystem = new ReservationSystemBuilder();
+            Exception exception = new Exception();
+            //Act
+            try
+            {
+                string hotelDetail = reservationSystem.FindHotel("05Navember2020", "05November2020");
+            }
+            catch (HotelReservationException e)
+            {
+                exception = e;
+            }
+            //Assert
+            Assert.AreEqual(exception.Message, "Incorrect month value");
+        }
+
+        /// <summary>
+        /// If value of any year is wrong,
+        /// it should throw custom exception with appropriate message
+        /// </summary>
+        [TestMethod]
+        public void GivenWrongYearValue_ShouldThrowCustomException()
+        {
+            //Arrange
+            ReservationSystemBuilder reservationSystem = new ReservationSystemBuilder();
+            Exception exception = new Exception();
+            //Act
+            try
+            {
+                string hotelDetail = reservationSystem.FindHotel("05Nov2020", "15Nov202o");
+            }
+            catch (HotelReservationException e)
+            {
+                exception = e;
+            }
+            //Assert
+            Assert.AreEqual(exception.Message, "Incorrect year value");
+        }
+
+
+        /// <summary>
+        /// If end date is before start date
+        /// it should throw custom exception with appropriate message
+        /// </summary>
+        [TestMethod]
+        public void GivenEndDateBeforeStartDate_ShouldThrowCustomException()
+        {
+            //Arrange
+            ReservationSystemBuilder reservationSystem = new ReservationSystemBuilder();
+            Exception exception = new Exception();
+            //Act
+            try
+            {
+                string hotelDetail = reservationSystem.FindHotel("05Nov2020", "03Nov2020");
+            }
+            catch (HotelReservationException e)
+            {
+                exception = e;
+            }
+            //Assert
+            Assert.AreEqual(exception.Message, "End date can not be before start date");
         }
     }
 }
