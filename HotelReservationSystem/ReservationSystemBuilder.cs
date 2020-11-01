@@ -12,9 +12,9 @@ namespace HotelReservationSystem
         public ReservationSystemBuilder()
         {
             MiamiHotels.HotelList.Clear();
-            MiamiHotels.AddHotel("Lakewood", 110);
-            MiamiHotels.AddHotel("Bridgewood", 150);
-            MiamiHotels.AddHotel("Ridgewood", 220);
+            MiamiHotels.AddHotel("Lakewood", 110,80);
+            MiamiHotels.AddHotel("Bridgewood", 150,50);
+            MiamiHotels.AddHotel("Ridgewood", 220,160);
         }
          
         /// <summary>

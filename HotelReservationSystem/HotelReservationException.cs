@@ -15,7 +15,8 @@ namespace HotelReservationSystem
             WRONG_DATE_VALUE,
             WRONG_MONTH_VALUE,
             WRONG_YEAR_VALUE,
-            ENDDATE_BEFORE_STARTDATE
+            ENDDATE_BEFORE_STARTDATE,
+            HOTEL_DONOT_HOTEL
         }
 
         ExceptionType type;
