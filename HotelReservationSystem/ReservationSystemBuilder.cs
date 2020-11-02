@@ -23,8 +23,8 @@ namespace HotelReservationSystem
         /// <returns>Hotel with lowest total rate</returns>
         public Hotel FindHotel(int duration)
         {
-            double minCost = MiamiHotels.HotelList.Min(h => h.Value.Rates * duration);
-            Hotel cheapestHotel = (MiamiHotels.HotelList.Values.Select(h=>h).Where(h => h.Rates * duration == minCost)).First();
+            double minCost = MiamiHotels.HotelList.Min(h => h.Value.WeekdayRates * duration);
+            Hotel cheapestHotel = (MiamiHotels.HotelList.Values.Select(h=>h).Where(h => h.WeekdayRates * duration == minCost)).First();
             return cheapestHotel;
         }
 
@@ -39,7 +39,7 @@ namespace HotelReservationSystem
             if (duration == -1)
                 throw new HotelReservationException(HotelReservationException.ExceptionType.ENDDATE_BEFORE_STARTDATE, "End date can not be before start date");
             Hotel hotel = FindHotel(duration);
-            return hotel.Name + ","+" Total Rates: $"+hotel.Rates*duration;
+            return hotel.Name + ","+" Total Rates: $"+hotel.WeekdayRates*duration;
         }
 
     }

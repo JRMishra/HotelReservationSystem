@@ -23,7 +23,7 @@ namespace HotelReservationSystem
         }
 
         public string Name { get => _name; }
-        public double Rates { get => _rates; }
+        public double WeekdayRates { get => _rates; }
         public double WeekendRates { get => _weekendrates; } 
     }
 }

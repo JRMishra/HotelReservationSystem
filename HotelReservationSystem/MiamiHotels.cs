@@ -51,11 +51,20 @@ namespace HotelReservationSystem
                 throw new HotelReservationException(HotelReservationException.ExceptionType.HOTEL_ALREADY_EXISTS, "This hotel already exist");
         }
 
+        /// <summary>
+        /// Add weekend rate for the hotel separately
+        /// </summary>
+        /// <param name="hotelName">Name of the hotel</param>
+        /// <param name="weekendRate">Weekend hotel rate to add</param>
         public static void AddWeekendRate(string hotelName, double weekendRate)
         {
+            if (hotelName == null)
+                throw new HotelReservationException(HotelReservationException.ExceptionType.NULL_HOTEL_NAME, "Hotel name can not be null");
+
             if (!hotelList.ContainsKey(hotelName))
-                throw new HotelReservationException(HotelReservationException.ExceptionType.HOTEL_DONOT_HOTEL, "Hotel do not exist");
-            Hotel hotel = new Hotel(hotelList[hotelName].Name, hotelList[hotelName].Rates, weekendRate);
+                throw new HotelReservationException(HotelReservationException.ExceptionType.HOTEL_DONOT_EXIST, "Hotel do not exist");
+            Hotel hotel = new Hotel(hotelList[hotelName].Name, hotelList[hotelName].WeekdayRates, weekendRate);
+            IsEligible(hotel);
             hotelList[hotelName] = hotel;
         }
 
@@ -69,8 +78,8 @@ namespace HotelReservationSystem
             if (hotel.Name == null)
                 throw new HotelReservationException(HotelReservationException.ExceptionType.NULL_HOTEL_NAME, "Hotel name can not be null");
 
-            if (hotel.Rates == 0.0 && hotel.WeekendRates==0.0)
-                throw new HotelReservationException(HotelReservationException.ExceptionType.ZERO_HOTEL_RATE, "Hotel rate can not be null");
+            if (hotel.WeekdayRates == 0.0 || hotel.WeekendRates==0.0)
+                throw new HotelReservationException(HotelReservationException.ExceptionType.ZERO_HOTEL_RATE, "Hotel rate can not be zero");
 
             if (!hotelList.ContainsKey(hotel.Name))
                 return true;
