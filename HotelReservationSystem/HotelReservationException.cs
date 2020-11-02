@@ -16,7 +16,9 @@ namespace HotelReservationSystem
             WRONG_MONTH_VALUE,
             WRONG_YEAR_VALUE,
             ENDDATE_BEFORE_STARTDATE,
-            HOTEL_DONOT_EXIST
+            HOTEL_DONOT_EXIST,
+            NEGATIVE_RATING,
+            RATING_OUTOF_BOUND
         }
 
         ExceptionType type;

@@ -23,7 +23,7 @@ namespace HotelReservationSystem
                 hotelList.Add(hotel.Name, hotel);
             else
                 throw new HotelReservationException(HotelReservationException.ExceptionType.HOTEL_ALREADY_EXISTS, 
-                                                    "This hotel already exist");
+                                                     "This hotel already exist");
         }
 
         /// <summary>
@@ -32,6 +32,19 @@ namespace HotelReservationSystem
         public static void AddHotel(string hotelName, double weekdayRate, double weekendRate)
         {
             Hotel hotel = new Hotel(hotelName, weekdayRate, weekendRate);
+            if (IsEligible(hotel))
+                hotelList.Add(hotel.Name, hotel);
+            else
+                throw new HotelReservationException(HotelReservationException.ExceptionType.HOTEL_ALREADY_EXISTS,
+                                                    "This hotel already exist");
+        }
+
+        /// <summary>
+        /// Take hotel name, rating and weekday and weekend rates, if eligible, add to hotel reservation system
+        /// </summary>
+        public static void AddHotel(string hotelName, double weekdayRate, double weekendRate, int rating)
+        {
+            Hotel hotel = new Hotel(hotelName, weekdayRate, weekendRate,rating);
             if (IsEligible(hotel))
                 hotelList.Add(hotel.Name, hotel);
             else
@@ -69,6 +82,25 @@ namespace HotelReservationSystem
         }
 
         /// <summary>
+        /// Add rating to an existing hotel in system
+        /// </summary>
+        /// <param name="hotelName">Hotel name</param>
+        /// <param name="rating">rating value</param>
+        public static void AddRating(string hotelName, int rating)
+        {
+            if (hotelName == null)
+                throw new HotelReservationException(HotelReservationException.ExceptionType.NULL_HOTEL_NAME, "Hotel name can not be null");
+
+            if (!hotelList.ContainsKey(hotelName))
+                throw new HotelReservationException(HotelReservationException.ExceptionType.HOTEL_DONOT_EXIST, "Hotel do not exist");
+
+            Hotel hotel = new Hotel(hotelList[hotelName].Name, hotelList[hotelName].WeekdayRates, 
+                                    hotelList[hotelName].WeekendRates, rating );
+            IsEligible(hotel);
+            hotelList[hotelName] = hotel;
+        }
+
+        /// <summary>
         /// Check eligibility criteria for hotel
         /// </summary>
         /// <param name="hotel"></param>
@@ -80,6 +112,12 @@ namespace HotelReservationSystem
 
             if (hotel.WeekdayRates == 0.0 || hotel.WeekendRates==0.0)
                 throw new HotelReservationException(HotelReservationException.ExceptionType.ZERO_HOTEL_RATE, "Hotel rate can not be zero");
+
+            if(hotel.Rating<0)
+                throw new HotelReservationException(HotelReservationException.ExceptionType.NEGATIVE_RATING, "Rating can not be negative");
+
+            if (hotel.Rating > 5)
+                throw new HotelReservationException(HotelReservationException.ExceptionType.RATING_OUTOF_BOUND, "Rating can not exceed 5");
 
             if (!hotelList.ContainsKey(hotel.Name))
                 return true;
