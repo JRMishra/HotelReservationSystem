@@ -12,9 +12,9 @@ namespace HotelReservationSystem
         public ReservationSystemBuilder()
         {
             MiamiHotels.HotelList.Clear();
-            MiamiHotels.AddHotel("Lakewood", 110,90,3);
-            MiamiHotels.AddHotel("Bridgewood", 150,50,4);
-            MiamiHotels.AddHotel("Ridgewood", 220,150,5);
+            MiamiHotels.AddHotel("Lakewood", 110,80,90,80,3);
+            MiamiHotels.AddHotel("Bridgewood", 150,110,50,50,4);
+            MiamiHotels.AddHotel("Ridgewood", 220,100,150,40,5);
         }
          
         /// <summary>
@@ -53,6 +53,9 @@ namespace HotelReservationSystem
             return hotel.Name + ","+" Total Rates: $"+(hotel.WeekdayRates*(duration-weekendCount)+hotel.WeekendRates*weekendCount);
         }
 
+        /// <summary>
+        /// For a date range, give best rated hotel and details
+        /// </summary>
         public string FindBestRatedHotel(string start, string end)
         {
             DateTime startDate = DateParser.ConvertToDate(start);
