@@ -2,11 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Text;
 
 namespace HotelReservationSystem
 {
-    class DateParser
+    public class DateParser
     {
         static readonly Dictionary<string, string> monthlyDays = new Dictionary<string, string>()
         {
@@ -116,6 +117,37 @@ namespace HotelReservationSystem
                 duration += end.Day - start.Day + 1;
             }
            return duration;
+        }
+
+        /// <summary>
+        /// Count number of weekends present inclusively between two specified dates
+        /// </summary>
+        /// <param name="start">starting date</param>
+        /// <param name="end">ending date</param>
+        /// <returns>count of weekends</returns>
+        public static int WeekendCount(DateTime start, DateTime end)
+        {
+            DayOfWeek startDay = start.DayOfWeek;
+            DayOfWeek endDay = end.DayOfWeek;
+            
+            int count = 0;
+            count += 2*( (end.Day-start.Day+1)/ 7);
+            int remaining = (end.Day - start.Day+1) % 7;
+            if ((int)startDay == 0)
+                count += (remaining == 1) ? 1 : 2;
+            else if ((int)startDay == 6)
+                count += (remaining == 1) ? 1 : 2;
+            else
+            {
+                int c = ((int)startDay + remaining-1);
+                if (c < 6)
+                    count += 0;
+                else if (c == 6)
+                    count += 1;
+                else
+                    count += 2;
+            }
+            return count;
         }
     }
 }
