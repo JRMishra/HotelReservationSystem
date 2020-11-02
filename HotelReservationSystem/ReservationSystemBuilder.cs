@@ -21,10 +21,10 @@ namespace HotelReservationSystem
         /// Method to find cheapest hotel for a given duration
         /// </summary>
         /// <returns>Hotel with lowest total rate</returns>
-        public Hotel FindCheapestHotel(int duration, int weekendCount)
+        public IEnumerable<Hotel> FindCheapestHotel(int duration, int weekendCount)
         {
             double minCost = MiamiHotels.HotelList.Min(h => h.Value.WeekdayRates * (duration-weekendCount)+h.Value.WeekendRates*weekendCount);
-            Hotel cheapestHotel = (MiamiHotels.HotelList.Values.Select(h=>h).Where(h => (h.WeekdayRates * (duration - weekendCount) + h.WeekendRates * weekendCount) == minCost)).First();
+            IEnumerable<Hotel> cheapestHotel = MiamiHotels.HotelList.Values.Where(h => (h.WeekdayRates * (duration - weekendCount) + h.WeekendRates * weekendCount) == minCost);
             return cheapestHotel;
         }
 
@@ -37,9 +37,19 @@ namespace HotelReservationSystem
             DateTime endDate = DateParser.ConvertToDate(end);
             int duration = DateParser.FindDuration(startDate, endDate);
             int weekendCount = DateParser.WeekendCount(startDate, endDate);
+            
             if (duration == -1)
                 throw new HotelReservationException(HotelReservationException.ExceptionType.ENDDATE_BEFORE_STARTDATE, "End date can not be before start date");
-            Hotel hotel = FindCheapestHotel(duration,weekendCount);
+            
+            IEnumerable<Hotel> hotels = FindCheapestHotel(duration, weekendCount);
+            Hotel hotel = FindCheapestHotel(duration, weekendCount).First();
+            foreach (Hotel eachHotel in hotels.Skip(1))
+            {
+                if(eachHotel.Rating>hotel.Rating)
+                {
+                    hotel = eachHotel;
+                }
+            }  
             return hotel.Name + ","+" Total Rates: $"+(hotel.WeekdayRates*(duration-weekendCount)+hotel.WeekendRates*weekendCount);
         }
 

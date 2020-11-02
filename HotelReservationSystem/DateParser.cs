@@ -130,7 +130,7 @@ namespace HotelReservationSystem
             count += 2*( (end.Day-start.Day+1)/ 7);
             int remaining = (end.Day - start.Day+1) % 7;
             if ((int)startDay == 0)
-                count += (remaining == 1) ? 1 : 2;
+                count +=  1 ;
             else if ((int)startDay == 6)
                 count += (remaining == 1) ? 1 : 2;
             else

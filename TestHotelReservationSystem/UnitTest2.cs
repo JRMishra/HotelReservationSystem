@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using HotelReservationSystem;
+using System.Linq;
 
 namespace TestHotelReservationSystem
 {
@@ -35,7 +36,7 @@ namespace TestHotelReservationSystem
             //Arrange
             ReservationSystemBuilder reservationSystem = new ReservationSystemBuilder();
             //Act
-            Hotel hotel = reservationSystem.FindCheapestHotel(2,0);
+            Hotel hotel = reservationSystem.FindCheapestHotel(2,0).First();
             //Assert
             Assert.AreEqual(hotel, MiamiHotels.HotelList["Lakewood"]);
         }
