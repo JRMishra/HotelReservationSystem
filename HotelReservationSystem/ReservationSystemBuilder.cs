@@ -53,5 +53,19 @@ namespace HotelReservationSystem
             return hotel.Name + ","+" Total Rates: $"+(hotel.WeekdayRates*(duration-weekendCount)+hotel.WeekendRates*weekendCount);
         }
 
+        public string FindBestRatedHotel(string start, string end)
+        {
+            DateTime startDate = DateParser.ConvertToDate(start);
+            DateTime endDate = DateParser.ConvertToDate(end);
+            int duration = DateParser.FindDuration(startDate, endDate);
+            int weekendCount = DateParser.WeekendCount(startDate, endDate);
+
+            if (duration == -1)
+                throw new HotelReservationException(HotelReservationException.ExceptionType.ENDDATE_BEFORE_STARTDATE, "End date can not be before start date");
+
+            int bestRating = MiamiHotels.HotelList.Max(h => h.Value.Rating);
+            Hotel bestRatedHotel = MiamiHotels.HotelList.Values.Where(h => h.Rating == bestRating).First();
+            return bestRatedHotel.Name + "," + " Total Rates: $" + (bestRatedHotel.WeekdayRates * (duration - weekendCount) + bestRatedHotel.WeekendRates * weekendCount);
+        }
     }
 }

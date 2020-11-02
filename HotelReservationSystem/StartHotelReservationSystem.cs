@@ -9,7 +9,7 @@ namespace HotelReservationSystem
         public static void Start()
         {
             ReservationSystemBuilder reservationSystem = new ReservationSystemBuilder();
-            Console.WriteLine(reservationSystem.FindHotel("11Sept","12Sept"));
+            Console.WriteLine(reservationSystem.FindHotel("11Nov2020","12Nov2020"));
         }
     }
 }
