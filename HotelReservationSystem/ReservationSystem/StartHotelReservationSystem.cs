@@ -18,6 +18,7 @@ namespace HotelReservationSystem
                 Console.WriteLine("1. Add Hotel\n" +
                     "2. Reserve hotel\n" +
                     "0. Exit");
+                Console.Write("Enter : ");
                 string userChoice = Console.ReadLine();
                 switch(userChoice)
                 {
@@ -44,20 +45,21 @@ namespace HotelReservationSystem
         private static void TakeUserInputToReserveHotel(ReservationSystemBuilder reservationSystem)
         {
             Console.WriteLine("Enter\n");
-             
+
+            Console.Write("Customer Type (Regular / Reward) : ");
+            string customerType = Console.ReadLine();
             Console.Write("Starting Date : ");
             string startDate = Console.ReadLine();
             startDate = String.Concat(startDate.Where(c => !Char.IsWhiteSpace(c)));
             Console.Write("EndDate Date : ");
             string endDate = Console.ReadLine();
             endDate = String.Concat(endDate.Where(c => !Char.IsWhiteSpace(c)));
-            Console.WriteLine(startDate+" "+endDate);
-
-            string sysResponse = reservationSystem.FindHotel(startDate,endDate);
+            
+            string sysResponse = reservationSystem.FindHotel(startDate,endDate,customerType);
             Console.WriteLine(sysResponse);
             Console.WriteLine("Enter 'Y' for Confirmation, 'N' for Cancelation ");
             if (Console.ReadLine().ToUpper() == "Y")
-                Console.WriteLine("Reservation Successfull");
+                Console.WriteLine("Reservation Successfull :) ");
             else
                 Console.WriteLine("Reservation Cancelled");
         }
