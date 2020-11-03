@@ -4,6 +4,6 @@ namespace HotelReservationSystem
 {
     interface IReservationSystemBuilder
     {
-        public string FindHotel(string start, string end);
+        public string FindHotel(string start, string end, string customerType);
     }
 }

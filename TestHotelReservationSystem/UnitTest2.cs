@@ -36,7 +36,7 @@ namespace TestHotelReservationSystem
             //Arrange
             ReservationSystemBuilder reservationSystem = new ReservationSystemBuilder();
             //Act
-            Hotel hotel = reservationSystem.FindCheapestHotel(2,0).First();
+            Hotel hotel = reservationSystem.FindCheapestHotelForNormalCustomer(2,0).First();
             //Assert
             Assert.AreEqual(hotel, MiamiHotels.HotelList["Lakewood"]);
         }

@@ -16,12 +16,12 @@ namespace HotelReservationSystem
             MiamiHotels.AddHotel("Bridgewood", 150,110,50,50,4);
             MiamiHotels.AddHotel("Ridgewood", 220,100,150,40,5);
         }
-         
+        
         /// <summary>
         /// Method to find cheapest hotel for a given duration
         /// </summary>
         /// <returns>Hotel with lowest total rate</returns>
-        public IEnumerable<Hotel> FindCheapestHotel(int duration, int weekendCount)
+        public IEnumerable<Hotel> FindCheapestHotelForNormalCustomer(int duration, int weekendCount)
         {
             double minCost = MiamiHotels.HotelList.Min(h => h.Value.WeekdayRates * (duration-weekendCount)+h.Value.WeekendRates*weekendCount);
             IEnumerable<Hotel> cheapestHotel = MiamiHotels.HotelList.Values.Where(h => (h.WeekdayRates * (duration - weekendCount) + h.WeekendRates * weekendCount) == minCost);
@@ -29,9 +29,19 @@ namespace HotelReservationSystem
         }
 
         /// <summary>
+        /// Find cheapest hotel for a reward customer
+        /// </summary>
+        public IEnumerable<Hotel> FindCheapestHotelForRewardCustomer(int duration, int weekendCount)
+        {
+            double minCost = MiamiHotels.HotelList.Min(h => h.Value.SpecialNormalRate * (duration - weekendCount) + h.Value.SpecialWeekendRate * weekendCount);
+            IEnumerable<Hotel> cheapestHotel = MiamiHotels.HotelList.Values.Where(h => (h.SpecialNormalRate * (duration - weekendCount) + h.SpecialWeekendRate * weekendCount) == minCost);
+            return cheapestHotel;
+        }
+
+        /// <summary>
         /// Method to return details of cheapest hotel for given range of dates
         /// </summary>
-        public string FindHotel(string start, string end)
+        public string FindHotel( string start, string end, string customerType="Normal")
         {
             DateTime startDate = DateParser.ConvertToDate(start);
             DateTime endDate = DateParser.ConvertToDate(end);
@@ -40,17 +50,34 @@ namespace HotelReservationSystem
             
             if (duration == -1)
                 throw new HotelReservationException(HotelReservationException.ExceptionType.ENDDATE_BEFORE_STARTDATE, "End date can not be before start date");
-            
-            IEnumerable<Hotel> hotels = FindCheapestHotel(duration, weekendCount);
-            Hotel hotel = FindCheapestHotel(duration, weekendCount).First();
+
+            IEnumerable<Hotel> hotels;
+            double totalRate;
+            if (customerType.ToLower().Contains("reward"))
+            {
+                hotels = FindCheapestHotelForRewardCustomer(duration, weekendCount);
+            }
+            else
+            {
+                hotels = FindCheapestHotelForNormalCustomer(duration, weekendCount);
+            }
+            Hotel hotel = hotels.First();
             foreach (Hotel eachHotel in hotels.Skip(1))
             {
                 if(eachHotel.Rating>hotel.Rating)
                 {
                     hotel = eachHotel;
                 }
-            }  
-            return hotel.Name + ","+" Total Rates: $"+(hotel.WeekdayRates*(duration-weekendCount)+hotel.WeekendRates*weekendCount);
+            }
+            if (customerType.ToLower().Contains("reward"))
+            {
+                totalRate = (hotel.SpecialNormalRate * (duration - weekendCount) + hotel.SpecialWeekendRate * weekendCount);
+            }
+            else
+            {
+                totalRate = (hotel.WeekdayRates * (duration - weekendCount) + hotel.WeekendRates * weekendCount);
+            }
+            return hotel.Name + ","+" Total Rates: $"+ totalRate;
         }
 
         /// <summary>
