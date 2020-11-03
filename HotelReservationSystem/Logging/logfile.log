@@ -1,0 +1,12 @@
+2020-11-03 23:41:06.6368 ERROR  -- UNKNOWN ERROR Index was outside the bounds of the array.
+2020-11-03 23:42:16.6954 ERROR  -- UNKNOWN ERROR : Index was outside the bounds of the array.
+2020-11-03 23:43:35.0977 ERROR  -- CUSTOM ERROR : End date can not be before start date
+2020-11-03 23:56:18.7410 ERROR  -- CUSTOM ERROR : Incorrect month value
+2020-11-03 23:57:11.7508 ERROR  -- UNKNOWN ERROR : Index and length must refer to a location within the string. (Parameter 'length')
+2020-11-04 00:01:13.0346 ERROR  -- CUSTOM ERROR : Incorrect month value
+2020-11-04 00:02:01.9421 ERROR  -- CUSTOM ERROR : Incorrect month value
+2020-11-04 00:06:09.4334 ERROR  -- CUSTOM ERROR : Incorrect month value
+2020-11-04 00:11:25.9611 ERROR  -- CUSTOM ERROR : Incorrect month value
+2020-11-04 00:12:10.7896 ERROR  -- CUSTOM ERROR : Incorrect month value
+2020-11-04 00:15:53.1513 ERROR  -- CUSTOM ERROR : Incorrect month value
+2020-11-04 00:19:48.7308 ERROR  -- CUSTOM ERROR : Incorrect month value
