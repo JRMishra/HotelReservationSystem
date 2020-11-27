@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using ReservationSystemDALayer;
+using System.Data;
 
 namespace HotelReservationSystem
 {
@@ -11,12 +13,35 @@ namespace HotelReservationSystem
     {
         public ReservationSystemBuilder()
         {
-            MiamiHotels.HotelList.Clear();
-            MiamiHotels.AddHotel("Lakewood", 110,80,90,80,3);
-            MiamiHotels.AddHotel("Bridgewood", 150,110,50,50,4);
-            MiamiHotels.AddHotel("Ridgewood", 220,100,150,40,5);
+            //AddDefaultHotelData();
+            AddSqlServerHotelDetails();
         }
-        
+
+        /// <summary>
+        /// Add some default hotels details to Reservation System
+        /// </summary>
+        private static void AddDefaultHotelData()
+        {
+            MiamiHotels.HotelList.Clear();
+            MiamiHotels.AddHotel("Lakewood", 110, 80, 90, 80, 3);
+            MiamiHotels.AddHotel("Bridgewood", 150, 110, 50, 50, 4);
+            MiamiHotels.AddHotel("Ridgewood", 220, 100, 150, 40, 5);
+        }
+
+        /// <summary>
+        /// Add miami hotel details from local sql server
+        /// </summary>
+        private static void AddSqlServerHotelDetails()
+        {
+            IEnumerable<DataRow> hotelDetails = SqlServerOperations.GetAllHotelDetails();
+            foreach(DataRow row in hotelDetails)
+            {
+                MiamiHotels.HotelList.Clear();
+                MiamiHotels.AddHotel(row.Field<string>("HotelName"), Convert.ToDouble(row.Field<Double>("WeekdayRate")), Convert.ToDouble(row.Field<Double>("WeekendRate")),
+                   Convert.ToDouble(row.Field<Double>("SpecialWeekdayRate")), Convert.ToDouble(row.Field<Double>("SpecialWeekendRate")), row.Field<int>("Rating"));
+            }
+        }
+
         /// <summary>
         /// Method to find cheapest hotel for a given duration
         /// </summary>

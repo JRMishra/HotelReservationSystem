@@ -7,7 +7,7 @@ namespace HotelReservationSystem
     public class Hotel
     {
         string _name;
-        double _rates;
+        double _weekdayRates;
         double _specialNormalRate;
         double _weekendrates;
         double _specialWeekendRate;
@@ -16,7 +16,7 @@ namespace HotelReservationSystem
         public Hotel(string name, double rates)
         {
             _name = name;
-            _rates = rates;
+            _weekdayRates = rates;
             _specialNormalRate = rates;
             _weekendrates = rates;
             _specialWeekendRate = rates;
@@ -32,7 +32,7 @@ namespace HotelReservationSystem
         public Hotel(string name, double rates, double weekendrates, int rating) 
         {
             _name = name;
-            _rates = rates;
+            _weekdayRates = rates;
             _specialNormalRate = rates;
             _weekendrates = rates;
             _specialWeekendRate = rates;
@@ -42,7 +42,7 @@ namespace HotelReservationSystem
         public Hotel(string name, double normalRates, double specialNormalRate, double weekendRates, double specialWeekendRate, int rating)
         {
             _name = name;
-            _rates = normalRates;
+            _weekdayRates = normalRates;
             _specialNormalRate = specialNormalRate;
             _weekendrates = weekendRates;
             _specialWeekendRate = specialWeekendRate;
@@ -50,7 +50,7 @@ namespace HotelReservationSystem
         }
 
         public string Name { get => _name; }
-        public double WeekdayRates { get => _rates; }
+        public double WeekdayRates { get => _weekdayRates; }
         public double WeekendRates { get => _weekendrates; }
         public int Rating { get => _rating; }
         public double SpecialNormalRate { get => _specialNormalRate; }
